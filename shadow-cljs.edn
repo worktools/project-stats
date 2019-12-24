@@ -47,6 +47,10 @@
       :target :node-script, :output-to "target/collector.js", :main app.collector/main!
       :devtools {:after-load app.collector/main!}
     }
+    :unimported {
+      :target :node-script, :output-to "target/unimported.js", :main app.unimported/main!
+      :devtools {:after-load app.unimported/main!}
+    }
     :upload {
       :target :node-script, :output-to "target/upload.js", :main app.upload/main!
       :devtools {:after-load app.upload/main!}
