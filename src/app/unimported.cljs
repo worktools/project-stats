@@ -22,6 +22,8 @@
 
 (def require-pattern (re-pattern "require\\(\\\"[\\w\\/\\-\\@\\.]+\\\"\\)"))
 
+(defn show-relative [x] (path/relative js/process.env.PWD x))
+
 (defn analyze-file! [entry options *all-files]
   (comment println "reading entry:" entry)
   (swap! *all-files conj entry)
@@ -32,7 +34,7 @@
         required-paths (->> (re-seq require-pattern content)
                             (map (fn [line] (subs line 9 (- (count line) 2))))
                             (set))]
-    (comment println "required path" required-paths)
+    (comment println "required path" (show-relative entry) required-paths imported-paths)
     (doall
      (->> (union imported-paths required-paths)
           (filter
@@ -75,11 +77,13 @@
         entry (path/join js/process.env.PWD (aget js/process.argv 2))
         *all-modules (atom #{})
         *all-files (atom #{})]
-    (println "Got entry file:" entry)
-    (println "Scanning files inside src/ .........")
+    (println "Got entry file:" (show-relative entry))
+    (println "Scanning files inside src/")
+    (println "Listing files not imported by" (show-relative entry) ".........")
     (println)
     (analyze-file! entry options *all-modules)
     (list-files! (path/join js/process.env.PWD "src/") *all-files)
+    (comment println "all modules" (pr-str @*all-files) (pr-str @*all-modules))
     (println
      (->> (difference @*all-files @*all-modules)
           (map (fn [filepath] (path/relative js/process.env.PWD filepath)))
