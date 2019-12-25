@@ -20,13 +20,21 @@
       (fs/existsSync index-tsx) index-tsx
       :else nil)))
 
+(def require-pattern (re-pattern "require\\(\\\"[\\w\\/\\-\\@\\.]+\\\"\\)"))
+
 (defn analyze-file! [entry options *all-files]
   (comment println "reading entry:" entry)
   (swap! *all-files conj entry)
-  (let [content (fs/readFileSync entry "utf8")]
+  (let [content (fs/readFileSync entry "utf8")
+        imported-paths (->> (re-seq from-pattern content)
+                            (map (fn [line] (subs line 7 (dec (count line)))))
+                            (set))
+        required-paths (->> (re-seq require-pattern content)
+                            (map (fn [line] (subs line 9 (- (count line) 2))))
+                            (set))]
+    (comment println "required path" required-paths)
     (doall
-     (->> (re-seq from-pattern content)
-          (map (fn [line] (subs line 7 (dec (count line)))))
+     (->> (union imported-paths required-paths)
           (filter
            (fn [pkg] (not (some (fn [x] (string/starts-with? pkg x)) (:packages options)))))
           (map
@@ -37,6 +45,7 @@
           (map
            (fn [filepath]
              (let [module-file (guess-module! filepath)]
+               (comment println "is a module" module-file)
                (if (some? module-file)
                  (if (contains? @*all-files module-file)
                    (do)
@@ -54,6 +63,8 @@
                (list-files! child-path *all-files))))))))
 
 (defn lookup-file! []
+  (let [entry-path (aget js/process.argv 2)]
+    (when (nil? entry-path) (println "No entry file!") (js/process.exit 1)))
   (let [pkgs (js->clj (js/JSON.parse (fs/readFileSync "package.json" "utf8")))
         tsconfig (js->clj (js/JSON.parse (fs/readFileSync "tsconfig.json" "utf8")))
         installed-pkgs (union
@@ -64,11 +75,16 @@
         entry (path/join js/process.env.PWD (aget js/process.argv 2))
         *all-modules (atom #{})
         *all-files (atom #{})]
+    (println "Got entry file:" entry)
+    (println "Scanning files inside src/ .........")
+    (println)
     (analyze-file! entry options *all-modules)
     (list-files! (path/join js/process.env.PWD "src/") *all-files)
-    (println (count @*all-modules))
-    (println (count @*all-files))
-    (println (string/join "\n" (difference @*all-files @*all-modules)))))
+    (println
+     (->> (difference @*all-files @*all-modules)
+          (map (fn [filepath] (path/relative js/process.env.PWD filepath)))
+          (sort)
+          (string/join "\n")))))
 
 (defn main! []
   (js/console.clear)
