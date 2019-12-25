@@ -1,0 +1,9 @@
+
+.shadow-cljs/
+cli/
+entry/
+src/
+target/
+calcit.cirru
+shadow-cljs.edn
+yarn.lock

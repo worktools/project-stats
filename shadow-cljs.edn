@@ -50,6 +50,7 @@
     :unimported {
       :target :node-script, :output-to "target/unimported.js", :main app.unimported/main!
       :devtools {:after-load app.unimported/main!}
+      :release {:output-to "dist/unimported.js"}
     }
     :upload {
       :target :node-script, :output-to "target/upload.js", :main app.upload/main!

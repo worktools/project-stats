@@ -6,7 +6,21 @@ Project Stats(WIP)
 
 ### Usage
 
-TODO.
+```bash
+yarn global add @jimengio/project-stats
+```
+
+### `unimported`
+
+`unimported` is a command for listing files not required from entry file:
+
+```bash
+project-unimported src/main.tsx
+```
+
+it relies on `package.json` and `tsconfig.json` for configs.
+
+### Stats(TODO)
 
 ```bash
 project-stats config.edn
