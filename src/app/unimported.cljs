@@ -5,6 +5,8 @@
             [clojure.set :refer [union difference]]
             [clojure.string :as string]))
 
+(def bare-imported-pattern (re-pattern "import\\s\\\"[\\w\\/\\-\\@\\.]+\\\"\\;"))
+
 (def from-pattern (re-pattern "\\sfrom\\s\\\"[\\w\\/\\-\\@\\.]+\\\""))
 
 (defn guess-module! [filepath]
@@ -33,10 +35,19 @@
                             (set))
         required-paths (->> (re-seq require-pattern content)
                             (map (fn [line] (subs line 9 (- (count line) 2))))
-                            (set))]
-    (comment println "required path" (show-relative entry) required-paths imported-paths)
+                            (set))
+        bare-imported-path (->> (re-seq bare-imported-pattern content)
+                                (map (fn [line] (subs line 8 (- (count line) 2))))
+                                (set))]
+    (comment
+     println
+     "required path"
+     (show-relative entry)
+     :required-paths
+     :imported-paths
+     bare-imported-path)
     (doall
-     (->> (union imported-paths required-paths)
+     (->> (union imported-paths required-paths bare-imported-path)
           (filter
            (fn [pkg] (not (some (fn [x] (string/starts-with? pkg x)) (:packages options)))))
           (map
