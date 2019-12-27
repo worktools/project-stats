@@ -52,6 +52,11 @@
       :devtools {:after-load app.unimported/main!}
       :release {:output-to "dist/unimported.js"}
     }
+    :uppercase {
+      :target :node-script, :output-to "target/uppercase.js", :main app.uppercase/main!
+      :devtools {:after-load app.uppercase/main!}
+      :release {:output-to "dist/uppercase.js"}
+    }
     :upload {
       :target :node-script, :output-to "target/upload.js", :main app.upload/main!
       :devtools {:after-load app.upload/main!}
