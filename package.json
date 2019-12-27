@@ -1,6 +1,6 @@
 {
   "name": "@jimengio/project-stats",
-  "version": "0.1.0-a4",
+  "version": "0.1.0-a5",
   "description": "Scripts for scanning project status",
   "main": "index.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "upload": "node target/upload.js",
     "up": "yarn build-cdn && yarn upload",
     "page": "shadow-cljs clj-run build.main/page",
-    "prepare": "yarn shadow-cljs release unimported",
+    "prepare": "yarn shadow-cljs release unimported uppercase",
     "ln": "cd target && rm -f entry && ln -s ../entry"
   },
   "repository": {
