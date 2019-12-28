@@ -6,6 +6,8 @@ Project Stats(WIP)
 
 ### Usage
 
+[![npm](https://img.shields.io/npm/v/@jimengio/project-stats)](https://www.npmjs.com/package/@jimengio/project-stats)
+
 ```bash
 yarn global add @jimengio/project-stats
 ```
@@ -19,6 +21,14 @@ project-unimported src/main.tsx
 ```
 
 it relies on `package.json` and `tsconfig.json` for configs.
+
+### `uppercase`
+
+List all files with uppercase letter in filename:
+
+```bash
+project-uppercase src/
+```
 
 ### Stats(TODO)
 

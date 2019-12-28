@@ -1,17 +1,17 @@
 {
   "name": "@jimengio/project-stats",
-  "version": "0.1.0-a3",
+  "version": "0.1.0-a5",
   "description": "Scripts for scanning project status",
   "main": "index.js",
   "scripts": {
-    "watch": "shadow-cljs watch unimported",
+    "watch": "shadow-cljs watch uppercase",
     "serve": "http-server dist -s",
     "build-cdn": "shadow-cljs clj-run build.main/build-cdn",
     "build": "shadow-cljs clj-run build.main/build",
     "upload": "node target/upload.js",
     "up": "yarn build-cdn && yarn upload",
     "page": "shadow-cljs clj-run build.main/page",
-    "prepare": "yarn shadow-cljs release unimported",
+    "prepare": "yarn shadow-cljs release unimported uppercase",
     "ln": "cd target && rm -f entry && ln -s ../entry"
   },
   "repository": {
@@ -19,7 +19,8 @@
     "url": "git@github.com:mvc-works/calcit-workflow.git"
   },
   "bin": {
-    "project-unimported": "./dist/unimported.js"
+    "project-unimported": "./dist/unimported.js",
+    "project-uppercase": "./dist/uppercase.js"
   },
   "author": "jiyinyiyong",
   "license": "MIT",
