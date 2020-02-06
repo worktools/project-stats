@@ -30,6 +30,16 @@ List all files with uppercase letter in filename:
 project-uppercase src/
 ```
 
+### `frequency`
+
+Find editing frequency of each file from Git history:
+
+```bash
+project-frequency
+
+project-frequency src # paths begin with "src"
+```
+
 ### Stats(TODO)
 
 ```bash
