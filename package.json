@@ -11,7 +11,7 @@
     "upload": "node target/upload.js",
     "up": "yarn build-cdn && yarn upload",
     "page": "shadow-cljs clj-run build.main/page",
-    "prepare": "yarn shadow-cljs release unimported uppercase frequency",
+    "build-scripts": "yarn shadow-cljs release unimported uppercase frequency",
     "ln": "cd target && rm -f entry && ln -s ../entry"
   },
   "repository": {
