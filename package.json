@@ -1,6 +1,6 @@
 {
   "name": "@jimengio/project-stats",
-  "version": "0.1.1-a1",
+  "version": "0.1.1-a1-dev",
   "description": "Scripts for scanning project status",
   "main": "index.js",
   "scripts": {
