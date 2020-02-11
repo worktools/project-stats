@@ -21,5 +21,4 @@
    :cdn-folder "tiye.me:cdn/calcit-workflow",
    :title "Calcit",
    :icon "http://cdn.tiye.me/logo/mvc-works.png",
-   :storage-key "workflow",
-   :upload-folder "tiye.me:repo/mvc-works/calcit-workflow/"})
+   :storage-key "workflow"})

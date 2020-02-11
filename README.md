@@ -40,6 +40,14 @@ project-frequency
 project-frequency src # paths begin with "src"
 ```
 
+### `usages`
+
+Detect usages of `useState`(currently only useState):
+
+```bash
+project-usages
+```
+
 ### Stats(TODO)
 
 ```bash
