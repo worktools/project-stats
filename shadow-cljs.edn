@@ -62,9 +62,10 @@
       :devtools {:after-load app.frequency/main!}
       :release {:output-to "dist/frequency.js"}
     }
-    :upload {
-      :target :node-script, :output-to "target/upload.js", :main app.upload/main!
-      :devtools {:after-load app.upload/main!}
+    :usages {
+      :target :node-script, :output-to "target/usages.js", :main app.usages/main!
+      :devtools {:after-load app.usages/main!}
+      :release {:output-to "dist/usages.js"}
     }
   }
 }

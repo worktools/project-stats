@@ -3,7 +3,8 @@
   (:require ["fs" :as fs]
             ["path" :as path]
             [clojure.set :refer [union difference]]
-            [clojure.string :as string]))
+            [clojure.string :as string]
+            [app.util.file :refer [get-dir-files!]]))
 
 (def bare-imported-pattern (re-pattern "import\\s\\\"[\\w\\/\\-\\@\\.]+\\\"\\;"))
 
@@ -65,16 +66,6 @@
                    (analyze-file! module-file options *all-files))
                  (println "no File" filepath)))))))))
 
-(defn list-files! [dir *all-files]
-  (doall
-   (->> (fs/readdirSync dir)
-        (map
-         (fn [child]
-           (let [child-path (path/join dir child)]
-             (if (.isFile (fs/statSync child-path))
-               (swap! *all-files conj child-path)
-               (list-files! child-path *all-files))))))))
-
 (defn lookup-file! []
   (let [entry-path (aget js/process.argv 2)]
     (when (nil? entry-path) (println "No entry file!") (js/process.exit 1)))
@@ -87,16 +78,15 @@
         options {:base-url base-url, :packages installed-pkgs}
         entry (path/join js/process.env.PWD (aget js/process.argv 2))
         *all-modules (atom #{})
-        *all-files (atom #{})]
+        all-files (get-dir-files! (path/join js/process.env.PWD "src/"))]
     (println "Got entry file:" (show-relative entry))
     (println "Scanning files inside src/")
     (println "Listing files not imported by" (show-relative entry) ".........")
     (println)
     (analyze-file! entry options *all-modules)
-    (list-files! (path/join js/process.env.PWD "src/") *all-files)
-    (comment println "all modules" (pr-str @*all-files) (pr-str @*all-modules))
+    (comment println "all modules" (pr-str all-files) (pr-str @*all-modules))
     (println
-     (->> (difference @*all-files @*all-modules)
+     (->> (difference all-files @*all-modules)
           (map (fn [filepath] (path/relative js/process.env.PWD filepath)))
           (sort)
           (string/join "\n")))))
