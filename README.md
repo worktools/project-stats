@@ -1,5 +1,5 @@
 
-Project Stats(WIP)
+Project Stats
 ----
 
 > scripts to gather file informations.
@@ -46,6 +46,16 @@ Detect usages of `useState`(currently only useState):
 
 ```bash
 project-usages
+
+limitSize=5 project-usages
+```
+
+### `file-size`
+
+```bash
+project-file-size
+
+limitSize=800 project-file-size
 ```
 
 ### Stats(TODO)

@@ -7,7 +7,10 @@
             [clojure.string :as string])
   (:require-macros [clojure.core.strint :refer [<<]]))
 
-(def preference {:queries ["useState(" "useState<"], :highlight "useState"})
+(def preference
+  {:queries ["useState(" "useState<"],
+   :highlight "useState",
+   :limit-size (or js/process.env.limitSize 9)})
 
 (defn main! []
   (let [all-files (get-dir-files! ".")]
@@ -20,7 +23,7 @@
                                   (some
                                    (fn [query] (string/includes? line query))
                                    (:queries preference)))))]
-        (when-not (< (count lines-with-it) 9)
+        (when-not (< (count lines-with-it) (:limit-size preference))
           (println)
           (println
            (chalk/bold (chalk/white filepath))

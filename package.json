@@ -1,10 +1,10 @@
 {
   "name": "@jimengio/project-stats",
-  "version": "0.1.1",
+  "version": "0.1.2-a1",
   "description": "Scripts for scanning project status",
   "main": "index.js",
   "scripts": {
-    "watch": "shadow-cljs watch unimported uppercase frequency usages",
+    "watch": "shadow-cljs watch unimported uppercase frequency usages file-size",
     "serve": "http-server dist -s",
     "build-cdn": "shadow-cljs clj-run build.main/build-cdn",
     "build": "shadow-cljs clj-run build.main/build",
@@ -20,6 +20,7 @@
     "project-unimported": "./dist/unimported.js",
     "project-frequency": "./dist/frequency.js",
     "project-uppercase": "./dist/uppercase.js",
+    "project-file-size": "./dist/file-size.js",
     "project-usages": "./dist/usages.js"
   },
   "author": "jiyinyiyong",

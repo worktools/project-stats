@@ -67,5 +67,10 @@
       :devtools {:after-load app.usages/main!}
       :release {:output-to "dist/usages.js"}
     }
+    :file-size {
+      :target :node-script, :output-to "target/file-size.js", :main app.file-size/main!
+      :devtools {:after-load app.file-size/main!}
+      :release {:output-to "dist/file-size.js"}
+    }
   }
 }
